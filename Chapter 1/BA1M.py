@@ -1,17 +1,17 @@
 """ Implement NumberToPattern """
 
-NumberToSymbol = {0:'A', 1:'C', 2:'G', 3:'T'}
+numb_to_symb = {0:'A', 1:'C', 2:'G', 3:'T'}
 
-def NumberToPattern(index, k):
+def num_to_pattern(index, k):
     """ returns pattern in accordance to number """
 
     if k == 1:
-        return NumberToSymbol[index]
+        return numb_to_symb[index]
 
-    prefixIndex = index / 4
+    pref_ind = index / 4
     r = index % 4
-    prefixPattern = NumberToPattern(prefixIndex, k - 1)
-    return prefixPattern + NumberToSymbol[r]
+    pref_pattern = num_to_pattern(pref_ind, k - 1)
+    return pref_pattern + numb_to_symb[r]
 
 if __name__ == "__main__":
-    print NumberToPattern(5267, 11)
+    print num_to_pattern(5267, 11)
