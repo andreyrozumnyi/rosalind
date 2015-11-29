@@ -1,3 +1,7 @@
+"""
+Compute the Number of Times a Pattern Appears in a Text
+"""
+
 def occurrences(string, sub):
     """
     :param string: string for analyzing
