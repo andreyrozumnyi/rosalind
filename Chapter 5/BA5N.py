@@ -1,5 +1,4 @@
-""" Find a Topological Ordering of a DAG """
-
+import networkx as nx
 
 def read_edges(fileName):
     graph = dict()
@@ -22,19 +21,6 @@ def read_edges(fileName):
 
     return graph, vertexes
 
-
-def topol_order(graph, start):
-    global order
-    global used
-    used[start] = True
-    graph[start].sort(reverse = True)
-    for i in xrange(len(graph[start])):
-        if used[graph[start][i]] == False:
-            topol_order(graph, graph[start][i])
-
-    order.append(start)
-
-
 def get_verttexes(graph):
     vertexes = set()
     for item in graph:
@@ -44,25 +30,16 @@ def get_verttexes(graph):
 
     return list(vertexes)
 
-
-def write_to_file(file_name, order):
-    string = ", ".join(str(i) for i in order)
-    with open(file_name, 'w') as file:
-        file.write(string)
-
 if __name__ == "__main__":
     graph, vertexes = read_edges("in.txt")
-    print graph
-    order = []
-    component = []
-    used = {}
-    for item in graph:
-        used[item] = False
-
-    vertexes.sort()
+    G=nx.DiGraph()
     for vert in vertexes:
-        if not used[vert]:
-            topol_order(graph, vert)
+        G.add_node(vert)
 
-    write_to_file("out.txt", order[::-1])
-    print order[::-1]
+    for node in graph:
+        for neighb in graph[node]:
+            G.add_edge(node, neighb)
+
+    ts = nx.topological_sort(G)
+    ts = [str(node) for node in ts]
+    print ", ".join(ts)
